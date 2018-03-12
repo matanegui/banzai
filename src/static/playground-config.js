@@ -1,7 +1,7 @@
 const windowWidth = window.innerWidth;
 const windowHeight = window.innerHeight;
-const baseWidth = 320;
-const baseHeight = 180;
+const baseWidth = 640;
+const baseHeight = 360;
 const scale = Math.min(Math.floor(windowWidth / baseWidth), Math.floor(windowHeight / baseHeight));
 
 export const PLAYGROUND_CONFIG = {

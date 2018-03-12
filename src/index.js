@@ -1,10 +1,9 @@
 import * as PLAYGROUND from './static/playground.js';
 import {
-    ANIMATIONS
-} from './static/animations';
-import {
     PLAYGROUND_CONFIG
 } from './static/playground-config';
+
+import { Animation } from './animation';
 
 // eslint-disable-next-line no-unused-vars
 let t = 0;
@@ -15,62 +14,66 @@ const entity = (x = 0, y = 0, components = {}) => ({
 });
 
 const app = new PLAYGROUND.Application(Object.assign(PLAYGROUND_CONFIG, {
-    create: () => {
-        app.entities = [
+    create: function () {
+        this.entities = [
             entity(0, 0, {
-                'animation': {
-                    speed: 40,
-                    id: 'walker',
-                    frameIndex: 0,
-                    frame: 0,
-                    timestamp: 0,
-                    state: 'walkingDown'
-                }
+                'animation': Animation.create('boi', 'walking_right', 80)
             })
         ];
-        app.entities.forEach(entity => {
+        this.pc = this.entities[0];
+        this.entities.forEach(entity => {
             //Load animation atlases
             const animation = entity.components.animation;
             if (animation) {
-                app.loadAtlas(animation.id);
+                this.loadAtlas(animation.id);
             }
         });
     },
-    resize: () => {
+    resize: function () {
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
-        const baseWidth = 320;
-        const baseHeight = 180;
+        const baseWidth = this.width;
+        const baseHeight = this.height;
         const scale = Math.min(Math.floor(windowWidth / baseWidth), Math.floor(windowHeight / baseHeight));
-        app.scale = scale;
+        this.scale = scale;
     },
-    step: (dt) => {
-        app.entities.forEach(entity => {
+    step: function (dt) {
+        const speed = 1.5;
+        //Parse input
+        const pcAnimation = this.pc.components.animation;
+        if (this.keyboard.keys.up) {
+            this.pc.y = this.pc.y - speed;
+            Animation.play(pcAnimation, 'walking_up');
+        } else if (this.keyboard.keys.right) {
+            this.pc.x = this.pc.x + speed;
+            Animation.play(pcAnimation, 'walking_right');
+        } else if (this.keyboard.keys.down) {
+            this.pc.y = this.pc.y + speed;
+            Animation.play(pcAnimation, 'walking_down');
+        } else if (this.keyboard.keys.left) {
+            this.pc.x = this.pc.x - speed;
+            Animation.play(pcAnimation, 'walking_left');
+        }
+        else {
+            const currentState = Animation.state(pcAnimation);
+            pcAnimation.frameIndex = 0;
+            Animation.stop(pcAnimation);
+        }
+
+        this.entities.forEach(entity => {
             //Update animations frames
             const animation = entity.components.animation;
-            if (animation) {
-                const atlas = ANIMATIONS[animation.id][animation.state];
-                if (animation.timestamp < 10 / animation.speed) {
-                    animation.timestamp += dt;
-                } else {
-                    animation.timestamp = 0;
-                    animation.frameIndex = animation.frameIndex < atlas.length - 1 ? animation.frameIndex + 1 : 0;
-                    animation.frame = atlas[animation.frameIndex];
-                }
-            }
+            Animation.forward(animation, dt);
         });
     },
-    render: () => {
-        const screen = app.layer;
-        screen.clear();
-        screen.font("46px title");
-        screen.fillStyle("#e23d69");
-        screen.fillText("Towers.io", 48, 8);
-        app.entities.forEach(entity => {
+    render: function () {
+        const screen = this.layer;
+        screen.clear('#A0C1D1');
+        this.entities.forEach(entity => {
             //Render animated entities
             const animation = entity.components.animation;
             if (animation) {
-                screen.drawAtlasFrame(app.atlases[animation.id], animation.frame, entity.x, entity.y);
+                screen.drawAtlasFrame(this.atlases[animation.id], Animation.frame(animation), entity.x, entity.y);
             }
         });
     }
