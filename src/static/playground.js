@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 var PLAYGROUND = {};
 
 
@@ -1881,7 +1883,7 @@ PLAYGROUND.Application.prototype = {
 
     },
 
-    render: function () {},
+    render: function () { },
 
     enableInputs: function () {
 
@@ -4363,7 +4365,7 @@ PLAYGROUND.Tween.prototype = {
 
                     break;
 
-                    /* color */
+                /* color */
 
                 case 1:
 
@@ -4379,7 +4381,7 @@ PLAYGROUND.Tween.prototype = {
 
                     break;
 
-                    /* angle */
+                /* angle */
 
                 case 2:
 
@@ -5075,7 +5077,7 @@ PLAYGROUND.LoadingScreen = {
     cq.cocoon = function (selector) {
         if (arguments.length === 0) {
             var canvas = cq.createCocoonCanvas(window.innerWidth, window.innerHeight);
-            window.addEventListener("resize", function () {});
+            window.addEventListener("resize", function () { });
         } else if (typeof selector === "string") {
             var canvas = document.querySelector(selector);
         } else if (typeof selector === "number") {
@@ -5875,15 +5877,15 @@ PLAYGROUND.LoadingScreen = {
 
         },
 
-        drawAtlasFrame: function (atlas, frame, x, y) {
+        drawAtlasFrame: function (atlas, frame, x, y, scale=1) {
 
             var frame = atlas.frames[frame];
-
             this.drawRegion(
                 atlas.image,
                 frame.region,
                 x - frame.width * this.alignX + frame.offset[0] + frame.region[2] * this.alignX,
-                y - frame.height * this.alignY + frame.offset[1] + frame.region[3] * this.alignY
+                y - frame.height * this.alignY + frame.offset[1] + frame.region[3] * this.alignY,
+                scale
             );
 
             return this;

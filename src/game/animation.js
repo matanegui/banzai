@@ -1,6 +1,6 @@
 import {
     ANIMATIONS
-} from './static/animations-data';
+} from '../static/animations-data';
 
 export const Animation = {
     create: (id, defaultState, speed = 0) => {
