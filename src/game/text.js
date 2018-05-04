@@ -1,6 +1,6 @@
 export const Text = {
     drawText: (screen, fontAtlas) => (text, x, y, { scale = 1, bw, bh } = {}) => {
-
+        console.log(scale);
         const charWidth = 4 * scale;
         const charHeight = 9 * scale;
 

@@ -17,7 +17,7 @@ const entity = (x = 0, y = 0, components = {}) => ({
 // eslint-disable-next-line no-unused-vars
 const app = new PLAYGROUND.Application(Object.assign(PLAYGROUND_CONFIG, {
     create: function () {
-        this.card = entity(300, 280, {
+        this.card = entity(100, 100, {
             'image': 'card'
         });
         this.entities = [
@@ -26,13 +26,11 @@ const app = new PLAYGROUND.Application(Object.assign(PLAYGROUND_CONFIG, {
         //Load bitmap font and set up text drawing function
         this.loadAtlas('font');
         this.layer.drawText = Text.drawText(this.layer, this.atlases.font);
-        //Load test board
-        this.loadImage('board');
         //Load test card
         this.loadImage('card');
         this.tween(this.card)
-            .to({ scale: 2 }, 0.5)
-            .to({ scale: 2 }, 0.5).wait(1)
+            .to({ scale: 1 }, 0.5)
+            .to({ scale: 1.3 }, 0.5).wait(1)
             .loop();
     },
     resize: function () {
@@ -43,18 +41,15 @@ const app = new PLAYGROUND.Application(Object.assign(PLAYGROUND_CONFIG, {
         const baseHeight = this.height;
         const scale = Math.min(Math.floor(windowWidth / baseWidth), Math.floor(windowHeight / baseHeight));
         this.scale = Math.max(1, scale);
-        console.log(scale);
     },
     step: function (dt) {
     },
     render: function () {
         const screen = this.layer;
         screen.clear('#444444');
-        screen.drawImage(this.images.board, 0, 0);
         screen.drawText(
-            `Perro salchicha gordo bachicha toma solcito a la orilla del mar. 
-            Tiene sombrero de marinero, y en vez de traje se puso un collar.`,
-            10, 20, { scale: 1, bw: 150 });
+            `Perro salchicha gordo bachicha toma solcito a la orilla del mar.`,
+            0, 172, { scale: 1, bw: 360 });
         screen
             .save()
             .align(0.5, 0.5)
