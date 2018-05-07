@@ -1,16 +1,15 @@
 export const Text = {
     drawText: (screen, fontAtlas) => (text, x, y, { scale = 1, bw, bh } = {}) => {
-        console.log(scale);
         const charWidth = 4 * scale;
-        const charHeight = 9 * scale;
+        const charHeight = 7 * scale;
+        const atlasOffset = 65;
 
         const render = (text, x = x, y = y) => {
             let xOffset = 0;
             for (let i = 0; i < text.length; i++) {
                 const entry = fontDict[text.charAt(i)];
                 if (entry !== undefined) {
-                    xOffset += 1;
-                    screen.drawAtlasFrame(fontAtlas, entry, x + (i * charWidth) + xOffset, y, scale);
+                    screen.drawAtlasFrame(fontAtlas, atlasOffset + entry, x + (i * charWidth) + xOffset, y, scale);
                 }
             }
         };
@@ -42,32 +41,32 @@ export const Text = {
             "X": 23,
             "Y": 24,
             "Z": 25,
-            "a": 26,
-            "b": 27,
-            "c": 28,
-            "d": 29,
-            "e": 30,
-            "f": 31,
-            "g": 32,
-            "h": 33,
-            "i": 34,
-            "j": 35,
-            "k": 36,
-            "l": 37,
-            "m": 38,
-            "n": 39,
-            "o": 40,
-            "p": 41,
-            "q": 42,
-            "r": 43,
-            "s": 44,
-            "t": 45,
-            "u": 46,
-            "v": 47,
-            "w": 48,
-            "x": 49,
-            "y": 50,
-            "z": 51
+            "a": 32,
+            "b": 33,
+            "c": 34,
+            "d": 35,
+            "e": 36,
+            "f": 37,
+            "g": 38,
+            "h": 39,
+            "i": 40,
+            "j": 41,
+            "k": 42,
+            "l": 43,
+            "m": 44,
+            "n": 45,
+            "o": 46,
+            "p": 47,
+            "q": 48,
+            "r": 49,
+            "s": 50,
+            "t": 51,
+            "u": 52,
+            "v": 53,
+            "w": 54,
+            "x": 55,
+            "y": 56,
+            "z": 57
         };
 
         // No text box

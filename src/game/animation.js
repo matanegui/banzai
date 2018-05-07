@@ -30,7 +30,7 @@ export const Animation = {
         if (animation && animation.playing) {
             const atlas = ANIMATIONS[animation.id][animation.state];
             //Update  animation frame if needed
-            if (animation.timestamp < 10 / animation.speed) {
+            if (animation.timestamp * 1000 < animation.speed) {
                 animation.timestamp += dt;
             } else {
                 animation.timestamp = 0;
