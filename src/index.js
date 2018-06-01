@@ -5,6 +5,7 @@ import {
 
 import { Animation } from './game/animation';
 import { Text } from './game/text';
+import { Map } from './game/map';
 
 const entity = (x = 0, y = 0, components = {}) => {
     const e = { x, y };
@@ -27,32 +28,17 @@ const app = new PLAYGROUND.Application(Object.assign(PLAYGROUND_CONFIG, {
 
         //Load tileset
         this.loadAtlas('tileset');
-        this.gameState.map = {
-            x: 0,
-            y: 8,
-            data: [
-                2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-                2, 1, 1, 1, 1, 1, 1, 1, 1, 2,
-                2, 1, 1, 1, 1, 2, 2, 2, 1, 2,
-                2, 1, 1, 1, 1, 1, 1, 1, 1, 2,
-                2, 1, 1, 1, 1, 1, 1, 1, 1, 2,
-                2, 1, 1, 1, 1, 1, 1, 1, 1, 2,
-                2, 2, 2, 2, 2, 2, 2, 2, 2, 2
-            ],
-            width: 10,
-            height: 7,
-            tileWidth: 24,
-            tileHeight: 24
-        };
-        const map = this.gameState.map;
-        for (let x = 0; x < map.height; x++) {
-            for (let y = 0; y < map.width; y++) {
-                const cellIndex = (x * map.width) + y;
-                const cellX = y * map.tileWidth;
-                const cellY = x * map.tileHeight;
-                console.log(map.data[cellIndex], cellX, cellY);
-            }
-        }
+        this.gameState.map = Map.create(0, 8, 10, 7, 24, 24);
+        this.gameState.map.data = [
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+            2, 1, 1, 1, 1, 1, 1, 1, 1, 2,
+            2, 1, 1, 1, 1, 2, 2, 2, 1, 2,
+            2, 1, 1, 1, 1, 1, 1, 1, 1, 2,
+            2, 1, 1, 1, 1, 1, 1, 1, 1, 2,
+            2, 1, 1, 1, 1, 1, 1, 1, 1, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2
+        ];
+
         //Load guy
         gameState.guy = entity(100, 50, {
             "animation": Animation.create('coqguy', 'idleRight', 300)
@@ -104,14 +90,15 @@ const app = new PLAYGROUND.Application(Object.assign(PLAYGROUND_CONFIG, {
             }
         }
 
+        //Player
         const guy = gameState.guy;
         screen.drawAtlasFrame(atlases[guy.animation.id], Animation.frame(guy.animation), guy.x, guy.y)
 
         //Interface
-        this.layer.fillStyle("#222222");
+        this.layer.fillStyle("#000000");
         this.layer.fillRect(240, 0, 80, 180);
 
-        //Text
+        //Test text
         screen.drawText(
             `Life: some`,
             244, 4, { scale: 1, bw: 70 });
