@@ -1,5 +1,5 @@
 export const ANIMATIONS = {
     "coqguy": {
-        "idle": [0, 1]
+        "idleRight": [0, 1]
     }
 };
